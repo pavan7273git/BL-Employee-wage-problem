@@ -5,7 +5,7 @@ def calculate_daily_wage(hours_worked,hour_rate):
 
 
 hours=float(input('Enter the hours worked by Employee: '))
-hour_rate=20
+hour_rate=8
 
 total_wage=calculate_daily_wage(hours,hour_rate)
 
