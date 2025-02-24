@@ -1,13 +1,10 @@
 import random
 
 class EmployeeWage:
-    hour_rate = 20
-    max_hours = 100
-    max_days = 20
 
     @classmethod
-    def calculate_daily_wage(cls, hours_worked):
-        return hours_worked * cls.hour_rate
+    def calculate_daily_wage(cls, hours_worked, wage_per_hour):
+        return hours_worked * wage_per_hour
 
     @classmethod
     def check_attendance(cls):
@@ -25,29 +22,42 @@ class EmployeeWage:
                 return 0
 
     @classmethod
-    def compute_employee_wage(cls):
+    def compute_employee_wage(cls, company_name, wage_per_hour, max_hours, max_days):
         total_hours = 0
         total_days = 0
         total_wage = 0
 
-        print('Welcome to Employee Wage Problem')
+        print(f'\nCalculating Wage for {company_name}')
 
-        while total_hours < cls.max_hours and total_days < cls.max_days:
+        while total_hours < max_hours and total_days < max_days:
             total_days += 1
             print(f'Day: {total_days}')
 
             daily_hours = cls.check_attendance()
 
-            if total_hours + daily_hours > cls.max_hours:
-                daily_hours = cls.max_hours - total_hours
+            if total_hours + daily_hours > max_hours:
+                daily_hours = max_hours - total_hours
 
             total_hours += daily_hours
-            daily_wage = cls.calculate_daily_wage(daily_hours)
+            daily_wage = cls.calculate_daily_wage(daily_hours, wage_per_hour)
             total_wage += daily_wage
 
             print(f'Worked {daily_hours} hours today. Daily Wage: {daily_wage}')
             print(f'Total Hours: {total_hours}, Total Days: {total_days}')
 
-        print(f'The total wage for the month is: {total_wage}')
+        print(f'Total wage for {company_name} is: {total_wage}')
 
-EmployeeWage.compute_employee_wage()
+companies = []
+num_companies = int(input("Enter the number of companies: "))
+
+for i in range(num_companies):
+    print(f"\nEnter details for Company {i + 1}:")
+    company_name = input("Company Name: ").strip()
+    wage_per_hour = int(input("Wage per Hour: ").strip())
+    max_hours = int(input("Maximum Hours: ").strip())
+    max_days = int(input("Maximum Working Days: ").strip())
+
+    companies.append((company_name, wage_per_hour, max_hours, max_days))
+
+for company in companies:
+    EmployeeWage.compute_employee_wage(*company)
